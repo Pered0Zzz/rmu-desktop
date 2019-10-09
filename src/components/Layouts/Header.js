@@ -136,7 +136,9 @@ const useStyles = makeStyles(theme => ({
 },
 }));
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
+    console.log('header/render', arguments);
+
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -148,6 +150,10 @@ export default function MiniDrawer() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    // constructor(props) {
+    //     super(props);
+    // }
 
     return (
         <div className={classes.root}>
@@ -171,7 +177,7 @@ export default function MiniDrawer() {
                         <MenuIcon className={classes.menuI}/>
                     </Fab>
                     <Typography variant="h6" noWrap>
-                        Головний Адміністратор Системи
+                        {props.userName}
                     </Typography>
                     <Button className={classes.button} variant="contained" color="primary">Налаштування</Button>
                     <Button variant="contained" color="secondary">Вихід</Button>
@@ -203,10 +209,10 @@ export default function MiniDrawer() {
 
                 <Divider/>
                 <List>
-                    {['Основні', 'Довідники'].map((text, index) => (
-                        <ListItem button key={text}>
+                    {props.modules.map((module, index) => (
+                        <ListItem button key={module.text}>
                             <ListItemIcon>{index % 2 === 0 ? <ArrowForwardIos className={classes.arrow1}/> : <ArrowForwardIos className={classes.arrow2}/>}</ListItemIcon>
-                            <ListItemText primary={text}/>
+                            <ListItemText primary={module.text}/>
                         </ListItem>
                     ))}
                 </List>
